@@ -1,0 +1,116 @@
+{
+  "kind": "build_request",
+  "title": "Create semen straw business management app",
+  "projectName": "Semen Straw Manager",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a backend data model to store semen straw inventory records with fields for: straw ID, bull identification, collection date, quality grade, storage location, and availability status",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores semen straw records with all specified fields",
+        "Records can be created, retrieved, updated, and deleted",
+        "Each straw has a unique identifier"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement backend functions to add new semen straw entries, update existing records, mark straws as sold or used, and retrieve inventory lists",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can add new straw entries with all required fields",
+        "Users can update straw information",
+        "Users can change straw status (available, sold, used)",
+        "Users can query all straws or filter by status"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create a frontend dashboard displaying the current semen straw inventory with a table or card view showing straw details, filterable by availability status and searchable by bull ID",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dashboard displays all inventory items clearly",
+        "Users can filter straws by status",
+        "Users can search by bull identification",
+        "Display updates when inventory changes"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Build a frontend form to add new semen straw records with input fields for straw ID, bull identification, collection date, quality grade, storage location, and initial status",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form includes all required input fields",
+        "Form validates required fields before submission",
+        "Successful submission adds record to inventory",
+        "User receives feedback on success or error"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement frontend functionality to edit existing semen straw records and update their status (mark as sold, used, or available)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can select a straw record to edit",
+        "Edit form pre-fills with current values",
+        "Users can update any field including status",
+        "Changes persist and reflect in the dashboard"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a professional, agricultural-themed visual design with earthy tones (greens, browns, cream), clean typography, and a layout optimized for inventory management workflows",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI uses cohesive color palette with agricultural theme",
+        "Typography is readable and professional",
+        "Layout facilitates quick data entry and retrieval",
+        "Design feels appropriate for business management context"
+      ]
+    }
+  ],
+  "constraints": [],
+  "nonGoals": [
+    "Integration with external livestock databases",
+    "Payment processing for straw sales",
+    "Multi-user authentication and role management",
+    "Mobile native applications",
+    "Real-time synchronization across devices",
+    "Automated breeding schedule recommendations"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

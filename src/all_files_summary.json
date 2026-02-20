@@ -1,0 +1,21 @@
+{
+  "backend/main.mo": "Motoko actor defining SemenStraw type with quality grades and availability statuses, providing CRUD operations (add, update status, get all, get by ID) using a Map-based storage.",
+  "feature_evidence.json": "Feature evidence report documenting four implemented features: dashboard with inventory table/filters, add straw form, edit/status update functionality, and agricultural-themed UI design.",
+  "frontend-file-summaries.txt": "JSON-formatted summaries of all frontend source files describing their purpose and functionality in the semen straw inventory management application.",
+  "frontend/index.css": "Tailwind CSS configuration with custom OKLCH color variables defining an agricultural-themed color palette for light and dark modes using earthy tones.",
+  "frontend/index.html": "HTML entry point for the React application with root div and module script reference to main.tsx.",
+  "frontend/src/App.tsx": "Root React component setting up TanStack Router with Dashboard route, QueryClientProvider for data fetching, and Sonner Toaster for notifications.",
+  "frontend/src/components/AddStrawForm.tsx": "Form component for adding new semen straw records with validation for all required fields (straw ID, bull ID, date, quality, location) and toast notifications on success/error.",
+  "frontend/src/components/EditStrawForm.tsx": "Form component for editing existing semen straw records with pre-filled values, supporting updates to all fields except straw ID, and separate status mutation handling.",
+  "frontend/src/components/InventoryFilters.tsx": "Filter component with search input for bull/straw ID and dropdown select for filtering by availability status (All, Available, Sold, Used).",
+  "frontend/src/components/InventoryTable.tsx": "Displays a table of semen straws with columns for ID, bull ID, collection date, quality, storage location, and status. Includes edit functionality via dialog and shows an empty state when no straws are found.",
+  "frontend/src/components/Layout.tsx": "Provides the main application layout with a header containing the app title and logo, a main content area using React Router's Outlet, and a footer with copyright and caffeine.ai attribution.",
+  "frontend/src/hooks/useActor.ts": "Custom hook that creates and manages an ICP actor instance based on Internet Identity authentication state. Automatically invalidates and refetches dependent queries when the actor changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides Internet Identity authentication context and hooks for ICP login/logout functionality. Manages AuthClient creation, identity state, and login status tracking.",
+  "frontend/src/hooks/useQueries.ts": "Defines React Query hooks for CRUD operations on semen straws including fetching all straws, fetching by ID, adding, updating, and updating status. All mutations invalidate the straws query cache.",
+  "frontend/src/index.css": "Defines Tailwind CSS configuration with custom CSS variables for an agricultural-themed color palette supporting both light and dark modes using OKLCH color space.",
+  "frontend/src/main.tsx": "Application entry point that sets up React Query client and Internet Identity provider, then renders the App component into the root DOM element.",
+  "frontend/src/pages/Dashboard.tsx": "Main dashboard page displaying the semen straw inventory with filtering by status and search, loading states, error handling, and a dialog for adding new straws.",
+  "frontend/tailwind.config.js": "Tailwind CSS configuration file defining custom theme extensions including OKLCH color system with CSS variables, custom animations for accordions, typography and container query plugins, and agricultural-themed design tokens.",
+  "project_state.json": "Project state file tracking a semen straw inventory management application with four completed frontend features (dashboard, add form, edit/status update, agricultural design) and two pending backend feature requests (data model and CRUD functions)."
+}

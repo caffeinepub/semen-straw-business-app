@@ -1,0 +1,86 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-frontend-dashboard-displaying-the-current-semen-straw-inventory-with-a-table-or-card-view-showing-straw-details-filterable-by-availability-status-and-searchable-by-bull-id",
+      "featureTitle": "Create a frontend dashboard displaying the current semen straw inventory with a table or card view showing straw details, filterable by availability status and searchable by bull ID",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/InventoryFilters.tsx",
+        "frontend/src/components/InventoryTable.tsx",
+        "frontend/src/pages/Dashboard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-frontend-form-to-add-new-semen-straw-records-with-input-fields-for-straw-id-bull-identification-collection-date-quality-grade-storage-location-and-initial-status",
+      "featureTitle": "Build a frontend form to add new semen straw records with input fields for straw ID, bull identification, collection date, quality grade, storage location, and initial status",
+      "files": [
+        "frontend/src/components/AddStrawForm.tsx",
+        "frontend/src/pages/Dashboard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-frontend-functionality-to-edit-existing-semen-straw-records-and-update-their-status-mark-as-sold-used-or-available",
+      "featureTitle": "Implement frontend functionality to edit existing semen straw records and update their status (mark as sold, used, or available)",
+      "files": [
+        "frontend/src/components/EditStrawForm.tsx",
+        "frontend/src/components/InventoryTable.tsx",
+        "frontend/src/pages/Dashboard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-professional-agricultural-themed-visual-design-with-earthy-tones-greens-browns-cream-clean-typography-and-a-layout-optimized-for-inventory-management-workflows",
+      "featureTitle": "Apply a professional, agricultural-themed visual design with earthy tones (greens, browns, cream), clean typography, and a layout optimized for inventory management workflows",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Semen Straw Manager Frontend",
+  "requirements": [
+    {
+      "id": "REQ-3",
+      "summary": "Create frontend dashboard displaying semen straw inventory with filtering and search",
+      "acceptanceCriteria": [
+        "Dashboard displays all inventory items clearly",
+        "Users can filter straws by status",
+        "Users can search by bull identification",
+        "Display updates when inventory changes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Dashboard.tsx",
+          "operation": "create",
+          "description": "Create Dashboard page component that fetches all straws using getAllStraws backend method, displays them in a table or card layout, implements status filter dropdown (Available, Sold, Used), and includes a search input for bull ID filtering. Verify the backend interface before implementing to ensure correct method usage and data structure handling."
+        },
+        {
+          "path": "frontend/src/components/InventoryTable.tsx",
+          "operation": "create",
+          "description": "Create InventoryTable component to render semen straw records in a table format with columns for straw ID, bull ID, collection date, quality grade, storage location, and status. Include sorting capabilities and responsive design using shadcn/ui Table components."
+        },
+        {
+          "path": "frontend/src/components/InventoryFilters.tsx",
+          "operation": "create",
+          "description": "Create InventoryFilters component with a status filter dropdown and bull ID search input. Use shadcn/ui Select and Input components. Emit filter changes to parent component for data filtering."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the Dashboard page into the application routing. Add route for Dashboard at root path '/' and include navigation structure if needed. Ensure Dashboard is the default landing page."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Build frontend form to add new semen straw records",
+      "acceptanceCriteria": [
+        "Form includes all required input fields",
+        "Form validates required fields before submission",
+        "Successful submission adds record to inventory",
+        "User receives feedback on success or error"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AddStrawForm.tsx",
+          "operation": "create",
+          "description": "Create AddStrawForm component with input fields for straw ID, bull identification, collection date (date picker), quality grade (select dropdown with Standard/Superior/Substandard options), and storage location. Implement form validation for required fields. On submission, call addOrUpdateStraw backend method. Display success/error messages using shadcn/ui Toast component. Verify the backend interface before implementing to ensure correct method signature and parameter types."
+        },
+        {
+          "path": "frontend/src/pages/Dashboard.tsx",
+          "operation": "modify",
+          "description": "Integrate AddStrawForm component into Dashboard page. Add a button to open the form in a modal or inline section. Refresh inventory list after successful form submission."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement frontend functionality to edit existing semen straw records and update status",
+      "acceptanceCriteria": [
+        "Users can select a straw record to edit",
+        "Edit form pre-fills with current values",
+        "Users can update any field including status",
+        "Changes persist and reflect in the dashboard"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/EditStrawForm.tsx",
+          "operation": "create",
+          "description": "Create EditStrawForm component that accepts a SemenStraw record as prop and pre-fills all fields (straw ID, bull ID, collection date, quality grade, storage location, status). Include status dropdown with Available/Sold/Used options. On submission, call addOrUpdateStraw for field updates and updateStrawStatus for status changes. Display success/error feedback. Verify the backend interface before implementing to ensure correct method usage."
+        },
+        {
+          "path": "frontend/src/components/InventoryTable.tsx",
+          "operation": "modify",
+          "description": "Add an 'Edit' action button to each row in the InventoryTable. On click, open EditStrawForm in a modal or slide-out panel with the selected straw record data. Use shadcn/ui Dialog component for the modal."
+        },
+        {
+          "path": "frontend/src/pages/Dashboard.tsx",
+          "operation": "modify",
+          "description": "Handle edit form submissions by refreshing the inventory list after successful updates to reflect changes immediately in the dashboard."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Apply professional agricultural-themed visual design with earthy tones and clean typography",
+      "acceptanceCriteria": [
+        "UI uses cohesive color palette with agricultural theme",
+        "Typography is readable and professional",
+        "Layout facilitates quick data entry and retrieval",
+        "Design feels appropriate for business management context"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Update global CSS variables and theme colors to implement agricultural color palette with earthy tones: greens (primary), browns (secondary), and cream (background/neutral). Define CSS custom properties for consistent color usage throughout the app. Ensure colors work with both light and dark mode if applicable."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Configure Tailwind theme to extend default colors with agricultural palette: greens, browns, cream. Set default font family to professional sans-serif options (e.g., Inter, Roboto). Configure spacing and border radius for clean, business-appropriate design."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "create",
+          "description": "Create Layout component that wraps the application with consistent header, navigation, and content area. Apply agricultural theme styling using the configured color palette. Include app title 'Semen Straw Manager' in header with appropriate branding. Ensure layout optimizes for inventory management workflows with clear visual hierarchy."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap application content with the Layout component to apply consistent design across all pages. Ensure the agricultural theme is visible throughout the user experience."
+        }
+      ]
+    }
+  ]
+}

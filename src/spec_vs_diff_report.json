@@ -1,0 +1,30 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-20T03:09:13.702Z",
+  "summary": "All requirements from the BuildRequest have been implemented. The application includes a complete backend data model and CRUD operations for semen straw inventory, a frontend dashboard with filtering and search capabilities, forms for adding and editing records, and an agricultural-themed design with earthy tones. No missing requirements or hallucinated features were identified.",
+  "missing_requirements": [],
+  "hallucinated_features": [],
+  "confidence": 0.95,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AddStrawForm.tsx",
+    "frontend/src/components/EditStrawForm.tsx",
+    "frontend/src/components/InventoryFilters.tsx",
+    "frontend/src/components/InventoryTable.tsx",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/Dashboard.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

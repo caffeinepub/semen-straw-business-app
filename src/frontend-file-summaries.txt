@@ -1,0 +1,12 @@
+{
+  "frontend/src/App.tsx": "Main application component that sets up routing with TanStack Router, wraps the app with QueryClientProvider, and includes the Toaster for notifications.",
+  "frontend/src/components/Layout.tsx": "Layout wrapper component with header containing app branding, main content area with Outlet for routing, and footer with attribution and copyright.",
+  "frontend/src/pages/Dashboard.tsx": "Dashboard page displaying inventory with filters, search, add button, and the inventory table; manages dialog state for adding new straws.",
+  "frontend/src/components/InventoryTable.tsx": "Table component displaying all semen straw records with columns for ID, bull ID, date, quality, location, status, and edit actions; includes empty state and edit dialog.",
+  "frontend/src/components/InventoryFilters.tsx": "Filter component with search input for bull/straw ID and status dropdown filter for Available/Sold/Used statuses.",
+  "frontend/src/components/AddStrawForm.tsx": "Form component for adding new semen straw records with validation, all required fields, and success/error toast notifications.",
+  "frontend/src/components/EditStrawForm.tsx": "Form component for editing existing semen straw records including status updates; pre-fills with current values and handles both field and status updates.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including getAllStraws, getStrawById, addStraw, updateStraw, and updateStrawStatus with automatic cache invalidation.",
+  "frontend/src/index.css": "Global styles with agricultural-themed OKLCH color system featuring earthy greens, browns, and cream tones for both light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration with Inter font family, agricultural color palette tokens, custom border radius, and extended theme settings."
+}
