@@ -4,7 +4,9 @@ import Order "mo:core/Order";
 import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
 import Array "mo:core/Array";
+import Migration "migration";
 
+(with migration = Migration.run)
 actor {
   type QualityGrade = {
     #Superior;
@@ -25,6 +27,7 @@ actor {
     quality : QualityGrade;
     storageLocation : Text;
     status : AvailabilityStatus;
+    quantity : Nat;
   };
 
   module SemenStraw {
@@ -33,9 +36,21 @@ actor {
     };
   };
 
-  let storage = Map.empty<Text, SemenStraw>();
+  type Sale = {
+    saleId : Text;
+    strawId : Text;
+    saleDate : Text;
+    buyerName : Text;
+    buyerContact : Text;
+    quantitySold : Nat;
+    salePrice : Float;
+  };
 
-  public shared ({ caller }) func addOrUpdateStraw(strawId : Text, bullId : Text, collectionDate : Text, quality : QualityGrade, storageLocation : Text) : async () {
+  let storage = Map.empty<Text, SemenStraw>();
+  let sales = Map.empty<Text, Sale>();
+  var nextSaleId = 0;
+
+  public shared ({ caller }) func addOrUpdateStraw(strawId : Text, bullId : Text, collectionDate : Text, quality : QualityGrade, storageLocation : Text, quantity : Nat) : async () {
     if (strawId.isEmpty()) {
       Runtime.trap("Straw ID cannot be empty");
     };
@@ -47,6 +62,7 @@ actor {
       quality;
       storageLocation;
       status = #Available;
+      quantity;
     };
 
     storage.add(strawId, straw);
@@ -67,11 +83,54 @@ actor {
     };
   };
 
+  public shared ({ caller }) func createSale(strawId : Text, saleDate : Text, buyerName : Text, buyerContact : Text, quantitySold : Nat, salePrice : Float) : async () {
+    switch (storage.get(strawId)) {
+      case (null) { Runtime.trap("Straw not found") };
+      case (?straw) {
+        if (straw.quantity < quantitySold) {
+          Runtime.trap("Insufficient quantity available");
+        };
+
+        let saleId = nextSaleId.toText();
+        let sale : Sale = {
+          saleId;
+          strawId;
+          saleDate;
+          buyerName;
+          buyerContact;
+          quantitySold;
+          salePrice;
+        };
+
+        sales.add(saleId, sale);
+
+        let updatedStraw = {
+          straw with
+          quantity = straw.quantity - quantitySold;
+          status = if (straw.quantity - quantitySold == 0) { #Sold } else {
+            straw.status;
+          };
+        };
+
+        storage.add(strawId, updatedStraw);
+        nextSaleId += 1;
+      };
+    };
+  };
+
   public query ({ caller }) func getAllStraws() : async [SemenStraw] {
     storage.values().toArray().sort();
   };
 
   public query ({ caller }) func getStrawById(strawId : Text) : async ?SemenStraw {
     storage.get(strawId);
+  };
+
+  public query ({ caller }) func getAllSales() : async [Sale] {
+    sales.values().toArray();
+  };
+
+  public query ({ caller }) func getSaleById(saleId : Text) : async ?Sale {
+    sales.get(saleId);
   };
 };

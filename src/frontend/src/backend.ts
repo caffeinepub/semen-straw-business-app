@@ -92,10 +92,20 @@ export class ExternalBlob {
 export interface SemenStraw {
     status: AvailabilityStatus;
     quality: QualityGrade;
+    quantity: bigint;
     storageLocation: string;
     bullId: string;
     collectionDate: string;
     strawId: string;
+}
+export interface Sale {
+    saleId: string;
+    buyerContact: string;
+    quantitySold: bigint;
+    salePrice: number;
+    buyerName: string;
+    strawId: string;
+    saleDate: string;
 }
 export enum AvailabilityStatus {
     Available = "Available",
@@ -108,25 +118,56 @@ export enum QualityGrade {
     Superior = "Superior"
 }
 export interface backendInterface {
-    addOrUpdateStraw(strawId: string, bullId: string, collectionDate: string, quality: QualityGrade, storageLocation: string): Promise<void>;
+    addOrUpdateStraw(strawId: string, bullId: string, collectionDate: string, quality: QualityGrade, storageLocation: string, quantity: bigint): Promise<void>;
+    createSale(strawId: string, saleDate: string, buyerName: string, buyerContact: string, quantitySold: bigint, salePrice: number): Promise<void>;
+    getAllSales(): Promise<Array<Sale>>;
     getAllStraws(): Promise<Array<SemenStraw>>;
+    getSaleById(saleId: string): Promise<Sale | null>;
     getStrawById(strawId: string): Promise<SemenStraw | null>;
     updateStrawStatus(strawId: string, newStatus: AvailabilityStatus): Promise<void>;
 }
-import type { AvailabilityStatus as _AvailabilityStatus, QualityGrade as _QualityGrade, SemenStraw as _SemenStraw } from "./declarations/backend.did.d.ts";
+import type { AvailabilityStatus as _AvailabilityStatus, QualityGrade as _QualityGrade, Sale as _Sale, SemenStraw as _SemenStraw } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
-    async addOrUpdateStraw(arg0: string, arg1: string, arg2: string, arg3: QualityGrade, arg4: string): Promise<void> {
+    async addOrUpdateStraw(arg0: string, arg1: string, arg2: string, arg3: QualityGrade, arg4: string, arg5: bigint): Promise<void> {
         if (this.processError) {
             try {
-                const result = await this.actor.addOrUpdateStraw(arg0, arg1, arg2, to_candid_QualityGrade_n1(this._uploadFile, this._downloadFile, arg3), arg4);
+                const result = await this.actor.addOrUpdateStraw(arg0, arg1, arg2, to_candid_QualityGrade_n1(this._uploadFile, this._downloadFile, arg3), arg4, arg5);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.addOrUpdateStraw(arg0, arg1, arg2, to_candid_QualityGrade_n1(this._uploadFile, this._downloadFile, arg3), arg4);
+            const result = await this.actor.addOrUpdateStraw(arg0, arg1, arg2, to_candid_QualityGrade_n1(this._uploadFile, this._downloadFile, arg3), arg4, arg5);
+            return result;
+        }
+    }
+    async createSale(arg0: string, arg1: string, arg2: string, arg3: string, arg4: bigint, arg5: number): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.createSale(arg0, arg1, arg2, arg3, arg4, arg5);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.createSale(arg0, arg1, arg2, arg3, arg4, arg5);
+            return result;
+        }
+    }
+    async getAllSales(): Promise<Array<Sale>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllSales();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllSales();
             return result;
         }
     }
@@ -144,31 +185,45 @@ export class Backend implements backendInterface {
             return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
         }
     }
-    async getStrawById(arg0: string): Promise<SemenStraw | null> {
+    async getSaleById(arg0: string): Promise<Sale | null> {
         if (this.processError) {
             try {
-                const result = await this.actor.getStrawById(arg0);
+                const result = await this.actor.getSaleById(arg0);
                 return from_candid_opt_n10(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getStrawById(arg0);
+            const result = await this.actor.getSaleById(arg0);
             return from_candid_opt_n10(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getStrawById(arg0: string): Promise<SemenStraw | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getStrawById(arg0);
+                return from_candid_opt_n11(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getStrawById(arg0);
+            return from_candid_opt_n11(this._uploadFile, this._downloadFile, result);
         }
     }
     async updateStrawStatus(arg0: string, arg1: AvailabilityStatus): Promise<void> {
         if (this.processError) {
             try {
-                const result = await this.actor.updateStrawStatus(arg0, to_candid_AvailabilityStatus_n11(this._uploadFile, this._downloadFile, arg1));
+                const result = await this.actor.updateStrawStatus(arg0, to_candid_AvailabilityStatus_n12(this._uploadFile, this._downloadFile, arg1));
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.updateStrawStatus(arg0, to_candid_AvailabilityStatus_n11(this._uploadFile, this._downloadFile, arg1));
+            const result = await this.actor.updateStrawStatus(arg0, to_candid_AvailabilityStatus_n12(this._uploadFile, this._downloadFile, arg1));
             return result;
         }
     }
@@ -182,12 +237,16 @@ function from_candid_QualityGrade_n8(_uploadFile: (file: ExternalBlob) => Promis
 function from_candid_SemenStraw_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _SemenStraw): SemenStraw {
     return from_candid_record_n5(_uploadFile, _downloadFile, value);
 }
-function from_candid_opt_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_SemenStraw]): SemenStraw | null {
+function from_candid_opt_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Sale]): Sale | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_SemenStraw]): SemenStraw | null {
     return value.length === 0 ? null : from_candid_SemenStraw_n4(_uploadFile, _downloadFile, value[0]);
 }
 function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     status: _AvailabilityStatus;
     quality: _QualityGrade;
+    quantity: bigint;
     storageLocation: string;
     bullId: string;
     collectionDate: string;
@@ -195,6 +254,7 @@ function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint
 }): {
     status: AvailabilityStatus;
     quality: QualityGrade;
+    quantity: bigint;
     storageLocation: string;
     bullId: string;
     collectionDate: string;
@@ -203,6 +263,7 @@ function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint
     return {
         status: from_candid_AvailabilityStatus_n6(_uploadFile, _downloadFile, value.status),
         quality: from_candid_QualityGrade_n8(_uploadFile, _downloadFile, value.quality),
+        quantity: value.quantity,
         storageLocation: value.storageLocation,
         bullId: value.bullId,
         collectionDate: value.collectionDate,
@@ -230,13 +291,13 @@ function from_candid_variant_n9(_uploadFile: (file: ExternalBlob) => Promise<Uin
 function from_candid_vec_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_SemenStraw>): Array<SemenStraw> {
     return value.map((x)=>from_candid_SemenStraw_n4(_uploadFile, _downloadFile, x));
 }
-function to_candid_AvailabilityStatus_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: AvailabilityStatus): _AvailabilityStatus {
-    return to_candid_variant_n12(_uploadFile, _downloadFile, value);
+function to_candid_AvailabilityStatus_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: AvailabilityStatus): _AvailabilityStatus {
+    return to_candid_variant_n13(_uploadFile, _downloadFile, value);
 }
 function to_candid_QualityGrade_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: QualityGrade): _QualityGrade {
     return to_candid_variant_n2(_uploadFile, _downloadFile, value);
 }
-function to_candid_variant_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: AvailabilityStatus): {
+function to_candid_variant_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: AvailabilityStatus): {
     Available: null;
 } | {
     Sold: null;

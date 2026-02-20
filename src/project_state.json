@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "App for semen straw business",
   "architectural_notes": [],
   "known_issues": [],
@@ -37,6 +37,46 @@
         "REQ-6"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-add-straw-form-in-the-frontend-to-include-a-quantity-input-field-that-accepts-positive-integers",
+      "title": "Update the add straw form in the frontend to include a quantity input field that accepts positive integers",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-quantity-column-in-the-inventory-table-showing-the-current-quantity-for-each-semen-straw-record",
+      "title": "Display the quantity column in the inventory table showing the current quantity for each semen straw record",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-ability-to-edit-quantity-in-the-editstrawform-component",
+      "title": "Add the ability to edit quantity in the EditStrawForm component",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-sell-sale-functionality-to-record-semen-straw-sales-with-fields-for-sale-date-buyer-information-quantity-sold-and-sale-price",
+      "title": "Add a sell/sale functionality to record semen straw sales with fields for sale date, buyer information, quantity sold, and sale price",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-a-sell-sale-action-button-or-option-in-the-inventory-table-for-each-straw-record-to-initiate-the-sale-recording-process",
+      "title": "Display a sell/sale action button or option in the inventory table for each straw record to initiate the sale recording process",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -53,6 +93,26 @@
       "summary": "Implement backend functions to add new semen straw entries, update existing records, mark straws as sold or used, and retrieve inventory lists",
       "reqIds": [
         "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add sell/sale functionality to record semen straw sales",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add quantity tracking field to semen straw inventory records",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add a quantity field to the SemenStraw type in the backend data model to track the number of straws available for each record",
+      "reqIds": [
+        "REQ-7"
       ],
       "status": "pending"
     }

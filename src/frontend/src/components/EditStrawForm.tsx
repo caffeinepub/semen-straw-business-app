@@ -20,6 +20,7 @@ export default function EditStrawForm({ straw, onSuccess }: EditStrawFormProps) 
   const [quality, setQuality] = useState<QualityGrade>(straw.quality as QualityGrade);
   const [storageLocation, setStorageLocation] = useState(straw.storageLocation);
   const [status, setStatus] = useState<AvailabilityStatus>(straw.status as AvailabilityStatus);
+  const [quantity, setQuantity] = useState(straw.quantity.toString());
 
   const updateStrawMutation = useUpdateStraw();
   const updateStatusMutation = useUpdateStrawStatus();
@@ -40,14 +41,21 @@ export default function EditStrawForm({ straw, onSuccess }: EditStrawFormProps) 
       return;
     }
 
+    const quantityNum = parseInt(quantity, 10);
+    if (isNaN(quantityNum) || quantityNum < 0) {
+      toast.error('Quantity must be a non-negative number');
+      return;
+    }
+
     try {
-      // Update basic fields
+      // Update basic fields including quantity
       await updateStrawMutation.mutateAsync({
         strawId: straw.strawId,
         bullId: bullId.trim(),
         collectionDate: collectionDate.trim(),
         quality,
         storageLocation: storageLocation.trim(),
+        quantity: BigInt(quantityNum),
       });
 
       // Update status if changed
@@ -143,17 +151,35 @@ export default function EditStrawForm({ straw, onSuccess }: EditStrawFormProps) 
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="edit-storageLocation">
-          Storage Location <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="edit-storageLocation"
-          placeholder="e.g., Tank A, Shelf 3"
-          value={storageLocation}
-          onChange={(e) => setStorageLocation(e.target.value)}
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="edit-storageLocation">
+            Storage Location <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="edit-storageLocation"
+            placeholder="e.g., Tank A, Shelf 3"
+            value={storageLocation}
+            onChange={(e) => setStorageLocation(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="edit-quantity">
+            Quantity <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="edit-quantity"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="e.g., 10"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            required
+          />
+        </div>
       </div>
 
       <div className="flex justify-end gap-3 pt-4">

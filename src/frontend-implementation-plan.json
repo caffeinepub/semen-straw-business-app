@@ -1,118 +1,105 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Semen Straw Manager Frontend",
+  "title": "Add sell functionality and quantity tracking to semen straw inventory",
   "requirements": [
     {
-      "id": "REQ-3",
-      "summary": "Create frontend dashboard displaying semen straw inventory with filtering and search",
+      "id": "REQ-8",
+      "summary": "Update the add straw form to include a quantity input field that accepts positive integers",
       "acceptanceCriteria": [
-        "Dashboard displays all inventory items clearly",
-        "Users can filter straws by status",
-        "Users can search by bull identification",
-        "Display updates when inventory changes"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Dashboard.tsx",
-          "operation": "create",
-          "description": "Create Dashboard page component that fetches all straws using getAllStraws backend method, displays them in a table or card layout, implements status filter dropdown (Available, Sold, Used), and includes a search input for bull ID filtering. Verify the backend interface before implementing to ensure correct method usage and data structure handling."
-        },
-        {
-          "path": "frontend/src/components/InventoryTable.tsx",
-          "operation": "create",
-          "description": "Create InventoryTable component to render semen straw records in a table format with columns for straw ID, bull ID, collection date, quality grade, storage location, and status. Include sorting capabilities and responsive design using shadcn/ui Table components."
-        },
-        {
-          "path": "frontend/src/components/InventoryFilters.tsx",
-          "operation": "create",
-          "description": "Create InventoryFilters component with a status filter dropdown and bull ID search input. Use shadcn/ui Select and Input components. Emit filter changes to parent component for data filtering."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire the Dashboard page into the application routing. Add route for Dashboard at root path '/' and include navigation structure if needed. Ensure Dashboard is the default landing page."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Build frontend form to add new semen straw records",
-      "acceptanceCriteria": [
-        "Form includes all required input fields",
-        "Form validates required fields before submission",
-        "Successful submission adds record to inventory",
-        "User receives feedback on success or error"
+        "AddStrawForm component includes a quantity input field",
+        "Quantity field validates that the value is a positive integer",
+        "Form submission includes the quantity value when creating new straws"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/AddStrawForm.tsx",
-          "operation": "create",
-          "description": "Create AddStrawForm component with input fields for straw ID, bull identification, collection date (date picker), quality grade (select dropdown with Standard/Superior/Substandard options), and storage location. Implement form validation for required fields. On submission, call addOrUpdateStraw backend method. Display success/error messages using shadcn/ui Toast component. Verify the backend interface before implementing to ensure correct method signature and parameter types."
-        },
-        {
-          "path": "frontend/src/pages/Dashboard.tsx",
           "operation": "modify",
-          "description": "Integrate AddStrawForm component into Dashboard page. Add a button to open the form in a modal or inline section. Refresh inventory list after successful form submission."
+          "description": "Add a quantity input field to the form with validation for positive integers. Update the form state to include quantity and pass it to the addOrUpdateStraw backend function. Ensure the field uses the agricultural-themed styling consistent with existing form inputs."
         }
       ]
     },
     {
-      "id": "REQ-5",
-      "summary": "Implement frontend functionality to edit existing semen straw records and update status",
+      "id": "REQ-9",
+      "summary": "Display the quantity column in the inventory table showing the current quantity for each semen straw record",
       "acceptanceCriteria": [
-        "Users can select a straw record to edit",
-        "Edit form pre-fills with current values",
-        "Users can update any field including status",
-        "Changes persist and reflect in the dashboard"
+        "InventoryTable component displays a quantity column",
+        "Quantity values are clearly visible for each straw record",
+        "Column is positioned logically within the existing table layout"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/InventoryTable.tsx",
+          "operation": "modify",
+          "description": "Add a Quantity column to the table displaying the quantity value from each SemenStraw record. Position the column between storage location and status columns. Format the quantity as a readable number."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add the ability to edit quantity in the EditStrawForm component",
+      "acceptanceCriteria": [
+        "EditStrawForm includes a quantity input field pre-filled with current value",
+        "Users can update the quantity when editing a straw record",
+        "Quantity field validates positive integers on edit"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/EditStrawForm.tsx",
-          "operation": "create",
-          "description": "Create EditStrawForm component that accepts a SemenStraw record as prop and pre-fills all fields (straw ID, bull ID, collection date, quality grade, storage location, status). Include status dropdown with Available/Sold/Used options. On submission, call addOrUpdateStraw for field updates and updateStrawStatus for status changes. Display success/error feedback. Verify the backend interface before implementing to ensure correct method usage."
-        },
-        {
-          "path": "frontend/src/components/InventoryTable.tsx",
           "operation": "modify",
-          "description": "Add an 'Edit' action button to each row in the InventoryTable. On click, open EditStrawForm in a modal or slide-out panel with the selected straw record data. Use shadcn/ui Dialog component for the modal."
-        },
-        {
-          "path": "frontend/src/pages/Dashboard.tsx",
-          "operation": "modify",
-          "description": "Handle edit form submissions by refreshing the inventory list after successful updates to reflect changes immediately in the dashboard."
+          "description": "Add a quantity input field to the edit form, pre-filled with the current straw's quantity value. Include validation for positive integers and pass the updated quantity to the addOrUpdateStraw backend function on form submission."
         }
       ]
     },
     {
-      "id": "REQ-6",
-      "summary": "Apply professional agricultural-themed visual design with earthy tones and clean typography",
+      "id": "REQ-11",
+      "summary": "Add a sell/sale functionality to record semen straw sales with fields for sale date, buyer information, quantity sold, and sale price",
       "acceptanceCriteria": [
-        "UI uses cohesive color palette with agricultural theme",
-        "Typography is readable and professional",
-        "Layout facilitates quick data entry and retrieval",
-        "Design feels appropriate for business management context"
+        "Frontend includes a form or dialog to record a sale for a specific straw",
+        "Recording a sale reduces the quantity of the associated straw record",
+        "Sales history is accessible from the frontend"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Update global CSS variables and theme colors to implement agricultural color palette with earthy tones: greens (primary), browns (secondary), and cream (background/neutral). Define CSS custom properties for consistent color usage throughout the app. Ensure colors work with both light and dark mode if applicable."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Configure Tailwind theme to extend default colors with agricultural palette: greens, browns, cream. Set default font family to professional sans-serif options (e.g., Inter, Roboto). Configure spacing and border radius for clean, business-appropriate design."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/components/SaleDialog.tsx",
           "operation": "create",
-          "description": "Create Layout component that wraps the application with consistent header, navigation, and content area. Apply agricultural theme styling using the configured color palette. Include app title 'Semen Straw Manager' in header with appropriate branding. Ensure layout optimizes for inventory management workflows with clear visual hierarchy."
+          "description": "Create a dialog component for recording sales with input fields for sale date, buyer name, buyer contact, quantity sold, and sale price. Include validation to ensure quantity sold does not exceed available quantity. Use the createSale backend function to record the sale. Display success/error notifications using toast."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for sale operations: useCreateSale mutation to call the createSale backend function, useAllSales query to fetch all sales using getAllSales, and useSaleById query to fetch individual sale records. Ensure the createSale mutation invalidates both straws and sales query caches."
+        },
+        {
+          "path": "frontend/src/pages/SalesHistory.tsx",
+          "operation": "create",
+          "description": "Create a page component displaying all recorded sales in a table format with columns for sale ID, straw ID, sale date, buyer name, buyer contact, quantity sold, and sale price. Include loading states and error handling using the useAllSales hook."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wrap application content with the Layout component to apply consistent design across all pages. Ensure the agricultural theme is visible throughout the user experience."
+          "description": "Add a route for the SalesHistory page in the TanStack Router configuration. Update navigation in the Layout component to include a link to the sales history page."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Add a navigation link to the Sales History page in the header, positioned alongside the dashboard link. Maintain the agricultural-themed styling for the navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Display a sell/sale action button in the inventory table for each straw record to initiate the sale recording process",
+      "acceptanceCriteria": [
+        "Each row in the inventory table includes a sell button or action",
+        "Clicking the sell button opens a sale recording form/dialog",
+        "The sell option is clearly visible and accessible"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/InventoryTable.tsx",
+          "operation": "modify",
+          "description": "Add a Sell action button to each row in the Actions column. Clicking the button opens the SaleDialog component with the selected straw's ID and quantity pre-filled. Disable the sell button when quantity is zero or status is not Available. Integrate the SaleDialog component into the table."
         }
       ]
     }

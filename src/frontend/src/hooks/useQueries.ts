@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { SemenStraw, QualityGrade, AvailabilityStatus } from '../backend';
+import type { SemenStraw, Sale, QualityGrade, AvailabilityStatus } from '../backend';
 
 export function useGetAllStraws() {
   const { actor, isFetching } = useActor();
@@ -39,6 +39,7 @@ export function useAddStraw() {
       collectionDate: string;
       quality: QualityGrade;
       storageLocation: string;
+      quantity: bigint;
     }) => {
       if (!actor) throw new Error('Actor not initialized');
       await actor.addOrUpdateStraw(
@@ -46,7 +47,8 @@ export function useAddStraw() {
         params.bullId,
         params.collectionDate,
         params.quality,
-        params.storageLocation
+        params.storageLocation,
+        params.quantity
       );
     },
     onSuccess: () => {
@@ -66,6 +68,7 @@ export function useUpdateStraw() {
       collectionDate: string;
       quality: QualityGrade;
       storageLocation: string;
+      quantity: bigint;
     }) => {
       if (!actor) throw new Error('Actor not initialized');
       await actor.addOrUpdateStraw(
@@ -73,7 +76,8 @@ export function useUpdateStraw() {
         params.bullId,
         params.collectionDate,
         params.quality,
-        params.storageLocation
+        params.storageLocation,
+        params.quantity
       );
     },
     onSuccess: () => {
@@ -97,5 +101,61 @@ export function useUpdateStrawStatus() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['straws'] });
     },
+  });
+}
+
+export function useCreateSale() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (params: {
+      strawId: string;
+      saleDate: string;
+      buyerName: string;
+      buyerContact: string;
+      quantitySold: bigint;
+      salePrice: number;
+    }) => {
+      if (!actor) throw new Error('Actor not initialized');
+      await actor.createSale(
+        params.strawId,
+        params.saleDate,
+        params.buyerName,
+        params.buyerContact,
+        params.quantitySold,
+        params.salePrice
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['straws'] });
+      queryClient.invalidateQueries({ queryKey: ['sales'] });
+    },
+  });
+}
+
+export function useGetAllSales() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<Sale[]>({
+    queryKey: ['sales'],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getAllSales();
+    },
+    enabled: !!actor && !isFetching,
+  });
+}
+
+export function useGetSaleById(saleId: string) {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<Sale | null>({
+    queryKey: ['sale', saleId],
+    queryFn: async () => {
+      if (!actor) return null;
+      return actor.getSaleById(saleId);
+    },
+    enabled: !!actor && !isFetching && !!saleId,
   });
 }

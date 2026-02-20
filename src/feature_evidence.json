@@ -2,13 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-frontend-dashboard-displaying-the-current-semen-straw-inventory-with-a-table-or-card-view-showing-straw-details-filterable-by-availability-status-and-searchable-by-bull-id",
-      "featureTitle": "Create a frontend dashboard displaying the current semen straw inventory with a table or card view showing straw details, filterable by availability status and searchable by bull ID",
+      "featureId": "feature-update-the-add-straw-form-in-the-frontend-to-include-a-quantity-input-field-that-accepts-positive-integers",
+      "featureTitle": "Update the add straw form in the frontend to include a quantity input field that accepts positive integers",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/InventoryFilters.tsx",
-        "frontend/src/components/InventoryTable.tsx",
-        "frontend/src/pages/Dashboard.tsx"
+        "frontend/src/components/AddStrawForm.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -18,16 +15,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-8"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-build-a-frontend-form-to-add-new-semen-straw-records-with-input-fields-for-straw-id-bull-identification-collection-date-quality-grade-storage-location-and-initial-status",
-      "featureTitle": "Build a frontend form to add new semen straw records with input fields for straw ID, bull identification, collection date, quality grade, storage location, and initial status",
+      "featureId": "feature-display-the-quantity-column-in-the-inventory-table-showing-the-current-quantity-for-each-semen-straw-record",
+      "featureTitle": "Display the quantity column in the inventory table showing the current quantity for each semen straw record",
       "files": [
-        "frontend/src/components/AddStrawForm.tsx",
-        "frontend/src/pages/Dashboard.tsx"
+        "frontend/src/components/InventoryTable.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -37,17 +33,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-4"
+        "REQ-9"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-frontend-functionality-to-edit-existing-semen-straw-records-and-update-their-status-mark-as-sold-used-or-available",
-      "featureTitle": "Implement frontend functionality to edit existing semen straw records and update their status (mark as sold, used, or available)",
+      "featureId": "feature-add-the-ability-to-edit-quantity-in-the-editstrawform-component",
+      "featureTitle": "Add the ability to edit quantity in the EditStrawForm component",
       "files": [
-        "frontend/src/components/EditStrawForm.tsx",
-        "frontend/src/components/InventoryTable.tsx",
-        "frontend/src/pages/Dashboard.tsx"
+        "frontend/src/components/EditStrawForm.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -57,18 +51,19 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-5"
+        "REQ-10"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-apply-a-professional-agricultural-themed-visual-design-with-earthy-tones-greens-browns-cream-clean-typography-and-a-layout-optimized-for-inventory-management-workflows",
-      "featureTitle": "Apply a professional, agricultural-themed visual design with earthy tones (greens, browns, cream), clean typography, and a layout optimized for inventory management workflows",
+      "featureId": "feature-add-a-sell-sale-functionality-to-record-semen-straw-sales-with-fields-for-sale-date-buyer-information-quantity-sold-and-sale-price",
+      "featureTitle": "Add a sell/sale functionality to record semen straw sales with fields for sale date, buyer information, quantity sold, and sale price",
       "files": [
         "frontend/src/App.tsx",
         "frontend/src/components/Layout.tsx",
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
+        "frontend/src/components/SaleDialog.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/SalesHistory.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -78,7 +73,25 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-6"
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-display-a-sell-sale-action-button-or-option-in-the-inventory-table-for-each-straw-record-to-initiate-the-sale-recording-process",
+      "featureTitle": "Display a sell/sale action button or option in the inventory table for each straw record to initiate the sale recording process",
+      "files": [
+        "frontend/src/components/InventoryTable.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
       ],
       "confidence": "high"
     }

@@ -1,113 +1,130 @@
 {
   "kind": "build_request",
-  "title": "Create semen straw business management app",
-  "projectName": "Semen Straw Manager",
+  "title": "Add sell functionality and quantity tracking to semen straw inventory",
+  "projectName": "Semen Straw Business",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Create a backend data model to store semen straw inventory records with fields for: straw ID, bull identification, collection date, quality grade, storage location, and availability status",
+      "id": "REQ-7",
+      "text": "Add a quantity field to the SemenStraw type in the backend data model to track the number of straws available for each record",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "quantity ka option nahi he"
         ]
       },
       "acceptanceCriteria": [
-        "Backend stores semen straw records with all specified fields",
-        "Records can be created, retrieved, updated, and deleted",
-        "Each straw has a unique identifier"
+        "SemenStraw type includes a quantity field of type Nat",
+        "Quantity represents the number of straws in inventory for that record",
+        "All existing CRUD operations handle the quantity field appropriately"
       ]
     },
     {
-      "id": "REQ-2",
-      "text": "Implement backend functions to add new semen straw entries, update existing records, mark straws as sold or used, and retrieve inventory lists",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Users can add new straw entries with all required fields",
-        "Users can update straw information",
-        "Users can change straw status (available, sold, used)",
-        "Users can query all straws or filter by status"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Create a frontend dashboard displaying the current semen straw inventory with a table or card view showing straw details, filterable by availability status and searchable by bull ID",
+      "id": "REQ-8",
+      "text": "Update the add straw form in the frontend to include a quantity input field that accepts positive integers",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "quantity ka option nahi he"
         ]
       },
       "acceptanceCriteria": [
-        "Dashboard displays all inventory items clearly",
-        "Users can filter straws by status",
-        "Users can search by bull identification",
-        "Display updates when inventory changes"
+        "AddStrawForm component includes a quantity input field",
+        "Quantity field validates that the value is a positive integer",
+        "Form submission includes the quantity value when creating new straws"
       ]
     },
     {
-      "id": "REQ-4",
-      "text": "Build a frontend form to add new semen straw records with input fields for straw ID, bull identification, collection date, quality grade, storage location, and initial status",
+      "id": "REQ-9",
+      "text": "Display the quantity column in the inventory table showing the current quantity for each semen straw record",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "quantity ka option nahi he"
         ]
       },
       "acceptanceCriteria": [
-        "Form includes all required input fields",
-        "Form validates required fields before submission",
-        "Successful submission adds record to inventory",
-        "User receives feedback on success or error"
+        "InventoryTable component displays a quantity column",
+        "Quantity values are clearly visible for each straw record",
+        "Column is positioned logically within the existing table layout"
       ]
     },
     {
-      "id": "REQ-5",
-      "text": "Implement frontend functionality to edit existing semen straw records and update their status (mark as sold, used, or available)",
+      "id": "REQ-10",
+      "text": "Add the ability to edit quantity in the EditStrawForm component",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "quantity ka option nahi he"
         ]
       },
       "acceptanceCriteria": [
-        "Users can select a straw record to edit",
-        "Edit form pre-fills with current values",
-        "Users can update any field including status",
-        "Changes persist and reflect in the dashboard"
+        "EditStrawForm includes a quantity input field pre-filled with current value",
+        "Users can update the quantity when editing a straw record",
+        "Quantity field validates positive integers on edit"
       ]
     },
     {
-      "id": "REQ-6",
-      "text": "Apply a professional, agricultural-themed visual design with earthy tones (greens, browns, cream), clean typography, and a layout optimized for inventory management workflows",
-      "target": "frontend",
+      "id": "REQ-11",
+      "text": "Add a sell/sale functionality to record semen straw sales with fields for sale date, buyer information, quantity sold, and sale price",
+      "target": "both",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "sell ka option nahi he"
         ]
       },
       "acceptanceCriteria": [
-        "UI uses cohesive color palette with agricultural theme",
-        "Typography is readable and professional",
-        "Layout facilitates quick data entry and retrieval",
-        "Design feels appropriate for business management context"
+        "Backend includes a Sale type with fields: saleId, strawId, saleDate, buyerName, quantitySold, and salePrice",
+        "Backend provides functions to record a sale and retrieve sale records",
+        "Frontend includes a form or dialog to record a sale for a specific straw",
+        "Recording a sale reduces the quantity of the associated straw record",
+        "Sales history is accessible from the frontend"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Display a sell/sale action button or option in the inventory table for each straw record to initiate the sale recording process",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "sell ka option nahi he"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each row in the inventory table includes a sell button or action",
+        "Clicking the sell button opens a sale recording form/dialog",
+        "The sell option is clearly visible and accessible"
       ]
     }
   ],
-  "constraints": [],
+  "constraints": [
+    "Maintain the existing agricultural-themed design when adding new UI elements",
+    "Ensure quantity updates are properly validated to prevent negative values",
+    "Sale transactions must maintain data integrity between straw quantity and sale records"
+  ],
   "nonGoals": [
-    "Integration with external livestock databases",
-    "Payment processing for straw sales",
-    "Multi-user authentication and role management",
-    "Mobile native applications",
-    "Real-time synchronization across devices",
-    "Automated breeding schedule recommendations"
+    "Advanced sales analytics or reporting",
+    "Multi-currency support for sale prices",
+    "Bulk sale operations",
+    "Automated inventory alerts or notifications"
   ],
   "imageRequirements": {
     "required": [],

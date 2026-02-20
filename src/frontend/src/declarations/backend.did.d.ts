@@ -16,9 +16,19 @@ export type AvailabilityStatus = { 'Available' : null } |
 export type QualityGrade = { 'Substandard' : null } |
   { 'Standard' : null } |
   { 'Superior' : null };
+export interface Sale {
+  'saleId' : string,
+  'buyerContact' : string,
+  'quantitySold' : bigint,
+  'salePrice' : number,
+  'buyerName' : string,
+  'strawId' : string,
+  'saleDate' : string,
+}
 export interface SemenStraw {
   'status' : AvailabilityStatus,
   'quality' : QualityGrade,
+  'quantity' : bigint,
   'storageLocation' : string,
   'bullId' : string,
   'collectionDate' : string,
@@ -26,10 +36,16 @@ export interface SemenStraw {
 }
 export interface _SERVICE {
   'addOrUpdateStraw' : ActorMethod<
-    [string, string, string, QualityGrade, string],
+    [string, string, string, QualityGrade, string, bigint],
     undefined
   >,
+  'createSale' : ActorMethod<
+    [string, string, string, string, bigint, number],
+    undefined
+  >,
+  'getAllSales' : ActorMethod<[], Array<Sale>>,
   'getAllStraws' : ActorMethod<[], Array<SemenStraw>>,
+  'getSaleById' : ActorMethod<[string], [] | [Sale]>,
   'getStrawById' : ActorMethod<[string], [] | [SemenStraw]>,
   'updateStrawStatus' : ActorMethod<[string, AvailabilityStatus], undefined>,
 }

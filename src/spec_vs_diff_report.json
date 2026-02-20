@@ -1,30 +1,39 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-20T03:09:13.702Z",
-  "summary": "All requirements from the BuildRequest have been implemented. The application includes a complete backend data model and CRUD operations for semen straw inventory, a frontend dashboard with filtering and search capabilities, forms for adding and editing records, and an agricultural-themed design with earthy tones. No missing requirements or hallucinated features were identified.",
+  "generatedAt": "2026-02-20T03:23:27.499Z",
+  "summary": "The diff implements all requested requirements for quantity tracking and sell functionality. The backend adds quantity field to SemenStraw and Sale type with CRUD operations. The frontend adds quantity inputs in AddStrawForm and EditStrawForm, displays quantity in InventoryTable, adds sell buttons, implements SaleDialog for recording sales, and creates SalesHistory page. All acceptance criteria appear to be met.",
   "missing_requirements": [],
-  "hallucinated_features": [],
-  "confidence": 0.95,
+  "hallucinated_features": [
+    {
+      "description": "Backend migration module (migration.mo) that migrates old SemenStraw records without quantity to new format with quantity defaulting to 1",
+      "reason": "Migration functionality was not requested in the BuildRequest. The BuildRequest only asked for adding quantity tracking, not migrating existing data.",
+      "evidence": [
+        "backend/migration.mo"
+      ]
+    },
+    {
+      "description": "Buyer contact field in Sale type and SaleDialog form",
+      "reason": "REQ-11 specifies 'buyer information' which could reasonably include contact, but explicitly lists only 'saleId, strawId, saleDate, buyerName, quantitySold, and salePrice' - buyerContact was not in the specified fields.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/SaleDialog.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.85,
   "changed_files": [
-    "all_files_summary.json",
     "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
-    "frontend/index.html",
     "frontend/src/App.tsx",
     "frontend/src/components/AddStrawForm.tsx",
     "frontend/src/components/EditStrawForm.tsx",
-    "frontend/src/components/InventoryFilters.tsx",
     "frontend/src/components/InventoryTable.tsx",
     "frontend/src/components/Layout.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/components/SaleDialog.tsx",
     "frontend/src/hooks/useQueries.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
-    "frontend/src/pages/Dashboard.tsx",
-    "frontend/tailwind.config.js",
+    "frontend/src/pages/SalesHistory.tsx",
     "project_state.json"
   ]
 }

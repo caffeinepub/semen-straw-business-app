@@ -18,6 +18,7 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
   const [collectionDate, setCollectionDate] = useState('');
   const [quality, setQuality] = useState<QualityGrade>(QualityGrade.Standard);
   const [storageLocation, setStorageLocation] = useState('');
+  const [quantity, setQuantity] = useState('1');
 
   const addStrawMutation = useAddStraw();
 
@@ -41,6 +42,12 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
       return;
     }
 
+    const quantityNum = parseInt(quantity, 10);
+    if (isNaN(quantityNum) || quantityNum <= 0) {
+      toast.error('Quantity must be a positive number');
+      return;
+    }
+
     try {
       await addStrawMutation.mutateAsync({
         strawId: strawId.trim(),
@@ -48,6 +55,7 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
         collectionDate: collectionDate.trim(),
         quality,
         storageLocation: storageLocation.trim(),
+        quantity: BigInt(quantityNum),
       });
 
       toast.success('Semen straw added successfully');
@@ -58,6 +66,7 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
       setCollectionDate('');
       setQuality(QualityGrade.Standard);
       setStorageLocation('');
+      setQuantity('1');
       
       onSuccess();
     } catch (error) {
@@ -129,17 +138,35 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="storageLocation">
-          Storage Location <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="storageLocation"
-          placeholder="e.g., Tank A, Shelf 3"
-          value={storageLocation}
-          onChange={(e) => setStorageLocation(e.target.value)}
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="storageLocation">
+            Storage Location <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="storageLocation"
+            placeholder="e.g., Tank A, Shelf 3"
+            value={storageLocation}
+            onChange={(e) => setStorageLocation(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="quantity">
+            Quantity <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="quantity"
+            type="number"
+            min="1"
+            step="1"
+            placeholder="e.g., 10"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            required
+          />
+        </div>
       </div>
 
       <div className="flex justify-end gap-3 pt-4">

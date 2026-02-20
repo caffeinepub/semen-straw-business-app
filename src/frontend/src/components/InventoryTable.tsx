@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Edit, Package } from 'lucide-react';
+import { Edit, Package, DollarSign } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import EditStrawForm from './EditStrawForm';
+import SaleDialog from './SaleDialog';
 import type { SemenStraw } from '../backend';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -15,10 +16,16 @@ interface InventoryTableProps {
 export default function InventoryTable({ straws }: InventoryTableProps) {
   const [selectedStraw, setSelectedStraw] = useState<SemenStraw | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isSaleDialogOpen, setIsSaleDialogOpen] = useState(false);
 
   const handleEdit = (straw: SemenStraw) => {
     setSelectedStraw(straw);
     setIsEditDialogOpen(true);
+  };
+
+  const handleSell = (straw: SemenStraw) => {
+    setSelectedStraw(straw);
+    setIsSaleDialogOpen(true);
   };
 
   const getStatusVariant = (status: string) => {
@@ -72,6 +79,7 @@ export default function InventoryTable({ straws }: InventoryTableProps) {
               <TableHead className="font-semibold">Collection Date</TableHead>
               <TableHead className="font-semibold">Quality Grade</TableHead>
               <TableHead className="font-semibold">Storage Location</TableHead>
+              <TableHead className="font-semibold">Quantity</TableHead>
               <TableHead className="font-semibold">Status</TableHead>
               <TableHead className="text-right font-semibold">Actions</TableHead>
             </TableRow>
@@ -88,21 +96,34 @@ export default function InventoryTable({ straws }: InventoryTableProps) {
                   </Badge>
                 </TableCell>
                 <TableCell>{straw.storageLocation}</TableCell>
+                <TableCell className="font-medium">{straw.quantity.toString()}</TableCell>
                 <TableCell>
                   <Badge variant={getStatusVariant(straw.status)}>
                     {straw.status}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleEdit(straw)}
-                    className="gap-2"
-                  >
-                    <Edit className="w-4 h-4" />
-                    Edit
-                  </Button>
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleSell(straw)}
+                      className="gap-2"
+                      disabled={straw.quantity === 0n || straw.status !== 'Available'}
+                    >
+                      <DollarSign className="w-4 h-4" />
+                      Sell
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(straw)}
+                      className="gap-2"
+                    >
+                      <Edit className="w-4 h-4" />
+                      Edit
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -119,6 +140,20 @@ export default function InventoryTable({ straws }: InventoryTableProps) {
             <EditStrawForm
               straw={selectedStraw}
               onSuccess={() => setIsEditDialogOpen(false)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isSaleDialogOpen} onOpenChange={setIsSaleDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Record Sale</DialogTitle>
+          </DialogHeader>
+          {selectedStraw && (
+            <SaleDialog
+              straw={selectedStraw}
+              onSuccess={() => setIsSaleDialogOpen(false)}
             />
           )}
         </DialogContent>
