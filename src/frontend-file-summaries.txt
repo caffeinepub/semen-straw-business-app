@@ -2,13 +2,14 @@
   "frontend/src/App.tsx": "Main application component with TanStack Router setup including routes for Dashboard (/) and SalesHistory (/sales), wrapped with QueryClientProvider and Toaster.",
   "frontend/src/components/Layout.tsx": "Layout wrapper component with header containing app branding and navigation links to Dashboard and Sales History pages, main content area with Outlet, and footer with attribution.",
   "frontend/src/pages/Dashboard.tsx": "Dashboard page displaying inventory with filters, search, add button, and the inventory table; manages dialog state for adding new straws.",
-  "frontend/src/components/InventoryTable.tsx": "Table component displaying all semen straw records with quantity column, sell and edit action buttons; sell button opens SaleDialog and is disabled when quantity is zero or status is not Available.",
+  "frontend/src/components/InventoryTable.tsx": "Table component displaying all semen straw records with color code column, quantity column, sell and edit action buttons; sell button opens SaleDialog and is disabled when quantity is zero or status is not Available.",
   "frontend/src/components/InventoryFilters.tsx": "Filter component with search input for bull/straw ID and status dropdown filter for Available/Sold/Used statuses.",
-  "frontend/src/components/AddStrawForm.tsx": "Form component for adding new semen straw records with validation, including quantity field that accepts positive integers and passes it to the backend.",
-  "frontend/src/components/EditStrawForm.tsx": "Form component for editing existing semen straw records including quantity field pre-filled with current value, validates positive integers, and updates both fields and status.",
-  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including straw CRUD, status updates, and new sale operations (useCreateSale, useGetAllSales, useGetSaleById) with automatic cache invalidation.",
+  "frontend/src/components/AddStrawForm.tsx": "Form component for adding new semen straw records with validation, including quantity and color code fields that are passed to the backend.",
+  "frontend/src/components/EditStrawForm.tsx": "Form component for editing existing semen straw records including quantity and color code fields, validates positive integers, and updates both fields and status.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including straw CRUD with color code support, status updates, sale operations, and new useGenerateSaleBill hook for fetching bill data with automatic cache invalidation.",
   "frontend/src/index.css": "Global styles with agricultural-themed OKLCH color system featuring earthy greens, browns, and cream tones for both light and dark modes.",
   "frontend/tailwind.config.js": "Tailwind configuration with Inter font family, agricultural color palette tokens, custom border radius, and extended theme settings.",
   "frontend/src/components/SaleDialog.tsx": "Dialog component for recording sales with fields for sale date, buyer information, quantity sold, and sale price; validates quantity against available stock and calls createSale backend function.",
-  "frontend/src/pages/SalesHistory.tsx": "Page component displaying all recorded sales in a table format with columns for sale ID, straw ID, sale date, buyer details, quantity sold, and sale price with loading and empty states."
+  "frontend/src/pages/SalesHistory.tsx": "Page component displaying all recorded sales in a table format with columns for sale details and a Generate Bill button in the Actions column that opens a dialog with the BillView component.",
+  "frontend/src/components/BillView.tsx": "Professional invoice component that displays formatted sale bill with business header, invoice details, buyer information, itemized straw details including color code, and print functionality optimized for printing."
 }

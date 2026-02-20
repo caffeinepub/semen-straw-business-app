@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { SemenStraw, Sale, QualityGrade, AvailabilityStatus } from '../backend';
+import type { SemenStraw, Sale, SaleBill, QualityGrade, AvailabilityStatus } from '../backend';
 
 export function useGetAllStraws() {
   const { actor, isFetching } = useActor();
@@ -40,6 +40,7 @@ export function useAddStraw() {
       quality: QualityGrade;
       storageLocation: string;
       quantity: bigint;
+      colorCode: string;
     }) => {
       if (!actor) throw new Error('Actor not initialized');
       await actor.addOrUpdateStraw(
@@ -48,7 +49,8 @@ export function useAddStraw() {
         params.collectionDate,
         params.quality,
         params.storageLocation,
-        params.quantity
+        params.quantity,
+        params.colorCode
       );
     },
     onSuccess: () => {
@@ -69,6 +71,7 @@ export function useUpdateStraw() {
       quality: QualityGrade;
       storageLocation: string;
       quantity: bigint;
+      colorCode: string;
     }) => {
       if (!actor) throw new Error('Actor not initialized');
       await actor.addOrUpdateStraw(
@@ -77,7 +80,8 @@ export function useUpdateStraw() {
         params.collectionDate,
         params.quality,
         params.storageLocation,
-        params.quantity
+        params.quantity,
+        params.colorCode
       );
     },
     onSuccess: () => {
@@ -155,6 +159,19 @@ export function useGetSaleById(saleId: string) {
     queryFn: async () => {
       if (!actor) return null;
       return actor.getSaleById(saleId);
+    },
+    enabled: !!actor && !isFetching && !!saleId,
+  });
+}
+
+export function useGenerateSaleBill(saleId: string) {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<SaleBill | null>({
+    queryKey: ['saleBill', saleId],
+    queryFn: async () => {
+      if (!actor) return null;
+      return actor.generateSaleBill(saleId);
     },
     enabled: !!actor && !isFetching && !!saleId,
   });

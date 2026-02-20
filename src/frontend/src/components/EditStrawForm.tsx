@@ -21,6 +21,7 @@ export default function EditStrawForm({ straw, onSuccess }: EditStrawFormProps) 
   const [storageLocation, setStorageLocation] = useState(straw.storageLocation);
   const [status, setStatus] = useState<AvailabilityStatus>(straw.status as AvailabilityStatus);
   const [quantity, setQuantity] = useState(straw.quantity.toString());
+  const [colorCode, setColorCode] = useState(straw.colorCode || '');
 
   const updateStrawMutation = useUpdateStraw();
   const updateStatusMutation = useUpdateStrawStatus();
@@ -48,7 +49,7 @@ export default function EditStrawForm({ straw, onSuccess }: EditStrawFormProps) 
     }
 
     try {
-      // Update basic fields including quantity
+      // Update basic fields including quantity and color code
       await updateStrawMutation.mutateAsync({
         strawId: straw.strawId,
         bullId: bullId.trim(),
@@ -56,6 +57,7 @@ export default function EditStrawForm({ straw, onSuccess }: EditStrawFormProps) 
         quality,
         storageLocation: storageLocation.trim(),
         quantity: BigInt(quantityNum),
+        colorCode: colorCode.trim(),
       });
 
       // Update status if changed
@@ -180,6 +182,19 @@ export default function EditStrawForm({ straw, onSuccess }: EditStrawFormProps) 
             required
           />
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="edit-colorCode">
+          Straw Color Code
+        </Label>
+        <Input
+          id="edit-colorCode"
+          placeholder="e.g., Blue, Red, Green"
+          value={colorCode}
+          onChange={(e) => setColorCode(e.target.value)}
+        />
+        <p className="text-xs text-muted-foreground">Optional: Enter the color code for identification</p>
       </div>
 
       <div className="flex justify-end gap-3 pt-4">

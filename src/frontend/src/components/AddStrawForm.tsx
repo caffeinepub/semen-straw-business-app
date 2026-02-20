@@ -19,6 +19,7 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
   const [quality, setQuality] = useState<QualityGrade>(QualityGrade.Standard);
   const [storageLocation, setStorageLocation] = useState('');
   const [quantity, setQuantity] = useState('1');
+  const [colorCode, setColorCode] = useState('');
 
   const addStrawMutation = useAddStraw();
 
@@ -56,6 +57,7 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
         quality,
         storageLocation: storageLocation.trim(),
         quantity: BigInt(quantityNum),
+        colorCode: colorCode.trim(),
       });
 
       toast.success('Semen straw added successfully');
@@ -67,6 +69,7 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
       setQuality(QualityGrade.Standard);
       setStorageLocation('');
       setQuantity('1');
+      setColorCode('');
       
       onSuccess();
     } catch (error) {
@@ -167,6 +170,19 @@ export default function AddStrawForm({ onSuccess }: AddStrawFormProps) {
             required
           />
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="colorCode">
+          Straw Color Code
+        </Label>
+        <Input
+          id="colorCode"
+          placeholder="e.g., Blue, Red, Green"
+          value={colorCode}
+          onChange={(e) => setColorCode(e.target.value)}
+        />
+        <p className="text-xs text-muted-foreground">Optional: Enter the color code for identification</p>
       </div>
 
       <div className="flex justify-end gap-3 pt-4">

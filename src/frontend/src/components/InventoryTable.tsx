@@ -79,6 +79,7 @@ export default function InventoryTable({ straws }: InventoryTableProps) {
               <TableHead className="font-semibold">Collection Date</TableHead>
               <TableHead className="font-semibold">Quality Grade</TableHead>
               <TableHead className="font-semibold">Storage Location</TableHead>
+              <TableHead className="font-semibold">Color Code</TableHead>
               <TableHead className="font-semibold">Quantity</TableHead>
               <TableHead className="font-semibold">Status</TableHead>
               <TableHead className="text-right font-semibold">Actions</TableHead>
@@ -96,6 +97,7 @@ export default function InventoryTable({ straws }: InventoryTableProps) {
                   </Badge>
                 </TableCell>
                 <TableCell>{straw.storageLocation}</TableCell>
+                <TableCell>{straw.colorCode || '-'}</TableCell>
                 <TableCell className="font-medium">{straw.quantity.toString()}</TableCell>
                 <TableCell>
                   <Badge variant={getStatusVariant(straw.status)}>

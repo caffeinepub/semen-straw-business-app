@@ -1,12 +1,23 @@
+import { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useGetAllSales } from '@/hooks/useQueries';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle, Receipt } from 'lucide-react';
+import { AlertCircle, Receipt, FileText } from 'lucide-react';
+import BillView from '@/components/BillView';
 
 export default function SalesHistory() {
   const { data: sales, isLoading, error } = useGetAllSales();
+  const [selectedSaleId, setSelectedSaleId] = useState<string | null>(null);
+  const [isBillDialogOpen, setIsBillDialogOpen] = useState(false);
+
+  const handleGenerateBill = (saleId: string) => {
+    setSelectedSaleId(saleId);
+    setIsBillDialogOpen(true);
+  };
 
   return (
     <div className="space-y-6">
@@ -55,6 +66,7 @@ export default function SalesHistory() {
                 <TableHead className="font-semibold">Buyer Contact</TableHead>
                 <TableHead className="font-semibold">Quantity Sold</TableHead>
                 <TableHead className="font-semibold text-right">Sale Price</TableHead>
+                <TableHead className="font-semibold text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -69,12 +81,37 @@ export default function SalesHistory() {
                   <TableCell className="text-right font-medium">
                     ${sale.salePrice.toFixed(2)}
                   </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleGenerateBill(sale.saleId)}
+                      className="gap-2"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Generate Bill
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
       )}
+
+      <Dialog open={isBillDialogOpen} onOpenChange={setIsBillDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Sale Invoice</DialogTitle>
+          </DialogHeader>
+          {selectedSaleId && (
+            <BillView
+              saleId={selectedSaleId}
+              onClose={() => setIsBillDialogOpen(false)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-add-straw-form-in-the-frontend-to-include-a-quantity-input-field-that-accepts-positive-integers",
-      "featureTitle": "Update the add straw form in the frontend to include a quantity input field that accepts positive integers",
+      "featureId": "feature-update-the-addstrawform-component-to-include-an-input-field-for-straw-color-code",
+      "featureTitle": "Update the AddStrawForm component to include an input field for straw color code",
       "files": [
         "frontend/src/components/AddStrawForm.tsx"
       ],
@@ -15,31 +15,13 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-8"
+        "REQ-14"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-display-the-quantity-column-in-the-inventory-table-showing-the-current-quantity-for-each-semen-straw-record",
-      "featureTitle": "Display the quantity column in the inventory table showing the current quantity for each semen straw record",
-      "files": [
-        "frontend/src/components/InventoryTable.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-the-ability-to-edit-quantity-in-the-editstrawform-component",
-      "featureTitle": "Add the ability to edit quantity in the EditStrawForm component",
+      "featureId": "feature-update-the-editstrawform-component-to-allow-editing-the-straw-color-code",
+      "featureTitle": "Update the EditStrawForm component to allow editing the straw color code",
       "files": [
         "frontend/src/components/EditStrawForm.tsx"
       ],
@@ -51,35 +33,13 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-10"
+        "REQ-15"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-sell-sale-functionality-to-record-semen-straw-sales-with-fields-for-sale-date-buyer-information-quantity-sold-and-sale-price",
-      "featureTitle": "Add a sell/sale functionality to record semen straw sales with fields for sale date, buyer information, quantity sold, and sale price",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/Layout.tsx",
-        "frontend/src/components/SaleDialog.tsx",
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/pages/SalesHistory.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-display-a-sell-sale-action-button-or-option-in-the-inventory-table-for-each-straw-record-to-initiate-the-sale-recording-process",
-      "featureTitle": "Display a sell/sale action button or option in the inventory table for each straw record to initiate the sale recording process",
+      "featureId": "feature-display-the-color-code-column-in-the-inventory-table-showing-the-color-code-for-each-semen-straw-record",
+      "featureTitle": "Display the color code column in the inventory table showing the color code for each semen straw record",
       "files": [
         "frontend/src/components/InventoryTable.tsx"
       ],
@@ -91,7 +51,44 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-12"
+        "REQ-16"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-generate-bill-or-view-invoice-action-button-in-the-saleshistory-page-for-each-sale-record-to-display-or-download-the-sale-bill",
+      "featureTitle": "Add a 'Generate Bill' or 'View Invoice' action button in the SalesHistory page for each sale record to display or download the sale bill",
+      "files": [
+        "frontend/src/pages/SalesHistory.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-frontend-invoice-bill-component-that-displays-a-formatted-sale-bill-with-a-professional-layout-suitable-for-printing",
+      "featureTitle": "Create a frontend invoice/bill component that displays a formatted sale bill with a professional layout suitable for printing",
+      "files": [
+        "frontend/src/components/BillView.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-19"
       ],
       "confidence": "high"
     }

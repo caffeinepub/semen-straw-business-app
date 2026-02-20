@@ -1,105 +1,93 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add sell functionality and quantity tracking to semen straw inventory",
+  "title": "Add sell bill/invoice generation and straw color code field",
   "requirements": [
     {
-      "id": "REQ-8",
-      "summary": "Update the add straw form to include a quantity input field that accepts positive integers",
+      "id": "REQ-14",
+      "summary": "Update AddStrawForm to include color code input field",
       "acceptanceCriteria": [
-        "AddStrawForm component includes a quantity input field",
-        "Quantity field validates that the value is a positive integer",
-        "Form submission includes the quantity value when creating new straws"
+        "Add straw form displays a text input field labeled 'Color Code' or 'Straw Color Code'",
+        "The color code input is submitted along with other straw details when creating a new straw",
+        "Form validation allows the color code field to be optional"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/AddStrawForm.tsx",
           "operation": "modify",
-          "description": "Add a quantity input field to the form with validation for positive integers. Update the form state to include quantity and pass it to the addOrUpdateStraw backend function. Ensure the field uses the agricultural-themed styling consistent with existing form inputs."
+          "description": "Add a colorCode input field to the form with label 'Straw Color Code'. Include the field in the form state and pass it to the addOrUpdateStraw backend function when submitting. Make the field optional with empty string as default value."
         }
       ]
     },
     {
-      "id": "REQ-9",
-      "summary": "Display the quantity column in the inventory table showing the current quantity for each semen straw record",
+      "id": "REQ-15",
+      "summary": "Update EditStrawForm to allow editing straw color code",
       "acceptanceCriteria": [
-        "InventoryTable component displays a quantity column",
-        "Quantity values are clearly visible for each straw record",
-        "Column is positioned logically within the existing table layout"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/InventoryTable.tsx",
-          "operation": "modify",
-          "description": "Add a Quantity column to the table displaying the quantity value from each SemenStraw record. Position the column between storage location and status columns. Format the quantity as a readable number."
-        }
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "summary": "Add the ability to edit quantity in the EditStrawForm component",
-      "acceptanceCriteria": [
-        "EditStrawForm includes a quantity input field pre-filled with current value",
-        "Users can update the quantity when editing a straw record",
-        "Quantity field validates positive integers on edit"
+        "Edit straw form displays the current color code value in an editable text input",
+        "Updated color code is saved when the form is submitted",
+        "Color code field remains optional during editing"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/EditStrawForm.tsx",
           "operation": "modify",
-          "description": "Add a quantity input field to the edit form, pre-filled with the current straw's quantity value. Include validation for positive integers and pass the updated quantity to the addOrUpdateStraw backend function on form submission."
+          "description": "Add a colorCode input field to the edit form that displays the existing straw.colorCode value. Include the field in the form state and pass it to the addOrUpdateStraw backend function when updating. Allow the field to remain empty if not provided."
         }
       ]
     },
     {
-      "id": "REQ-11",
-      "summary": "Add a sell/sale functionality to record semen straw sales with fields for sale date, buyer information, quantity sold, and sale price",
+      "id": "REQ-16",
+      "summary": "Display color code column in inventory table",
       "acceptanceCriteria": [
-        "Frontend includes a form or dialog to record a sale for a specific straw",
-        "Recording a sale reduces the quantity of the associated straw record",
-        "Sales history is accessible from the frontend"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/SaleDialog.tsx",
-          "operation": "create",
-          "description": "Create a dialog component for recording sales with input fields for sale date, buyer name, buyer contact, quantity sold, and sale price. Include validation to ensure quantity sold does not exceed available quantity. Use the createSale backend function to record the sale. Display success/error notifications using toast."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "modify",
-          "description": "Add React Query hooks for sale operations: useCreateSale mutation to call the createSale backend function, useAllSales query to fetch all sales using getAllSales, and useSaleById query to fetch individual sale records. Ensure the createSale mutation invalidates both straws and sales query caches."
-        },
-        {
-          "path": "frontend/src/pages/SalesHistory.tsx",
-          "operation": "create",
-          "description": "Create a page component displaying all recorded sales in a table format with columns for sale ID, straw ID, sale date, buyer name, buyer contact, quantity sold, and sale price. Include loading states and error handling using the useAllSales hook."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add a route for the SalesHistory page in the TanStack Router configuration. Update navigation in the Layout component to include a link to the sales history page."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Add a navigation link to the Sales History page in the header, positioned alongside the dashboard link. Maintain the agricultural-themed styling for the navigation."
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Display a sell/sale action button in the inventory table for each straw record to initiate the sale recording process",
-      "acceptanceCriteria": [
-        "Each row in the inventory table includes a sell button or action",
-        "Clicking the sell button opens a sale recording form/dialog",
-        "The sell option is clearly visible and accessible"
+        "InventoryTable component displays a 'Color Code' column",
+        "Each row shows the corresponding straw's color code value",
+        "Empty color codes display appropriately (e.g., '-' or empty cell)"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/InventoryTable.tsx",
           "operation": "modify",
-          "description": "Add a Sell action button to each row in the Actions column. Clicking the button opens the SaleDialog component with the selected straw's ID and quantity pre-filled. Disable the sell button when quantity is zero or status is not Available. Integrate the SaleDialog component into the table."
+          "description": "Add a 'Color Code' column to the table between the 'Storage Location' and 'Quantity' columns. Display straw.colorCode for each row, showing '-' when the value is empty or not provided."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Add Generate Bill button in SalesHistory page for each sale record",
+      "acceptanceCriteria": [
+        "Each sale row in the sales history table displays a 'Generate Bill' or 'View Invoice' button",
+        "Clicking the button displays a formatted bill/invoice with all sale details",
+        "Bill includes business header, sale information, buyer details, item details, and total price",
+        "User can print or download the bill as a PDF"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SalesHistory.tsx",
+          "operation": "modify",
+          "description": "Add a 'Generate Bill' button/action to each sale row in the sales table. When clicked, fetch the sale bill data using the generateSaleBill backend function and display the BillView component in a dialog or modal. The button should be placed in a new Actions column."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Create invoice/bill component with professional print layout",
+      "acceptanceCriteria": [
+        "Bill component displays business name/logo at the top",
+        "Shows invoice number (sale ID), date, and buyer information",
+        "Displays itemized details: straw ID, bull ID, color code, quantity, unit price, and total",
+        "Includes a print button and is print-optimized with proper CSS",
+        "Layout uses the agricultural theme with appropriate styling"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/BillView.tsx",
+          "operation": "create",
+          "description": "Create a new component that accepts SaleBill data (containing sale, straw, and totalAmount). Display a professionally formatted invoice with: business header 'Semen Straw Business', invoice number (saleId), sale date, buyer name and contact, itemized straw details (strawId, bullId, colorCode, quality, quantitySold, salePrice), and calculated total amount. Include a print button that triggers window.print(). Use print-specific CSS (@media print) to optimize the layout for printing. Apply the agricultural theme colors from index.css for styling."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add a new React Query hook useGenerateSaleBill that accepts a saleId parameter and calls the generateSaleBill backend function. Return the SaleBill data including sale details, straw details, and total amount. Handle loading and error states appropriately."
         }
       ]
     }

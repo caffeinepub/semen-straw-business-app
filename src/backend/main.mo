@@ -4,6 +4,8 @@ import Order "mo:core/Order";
 import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
 import Array "mo:core/Array";
+import Nat "mo:core/Nat";
+import Float "mo:core/Float";
 import Migration "migration";
 
 (with migration = Migration.run)
@@ -28,6 +30,7 @@ actor {
     storageLocation : Text;
     status : AvailabilityStatus;
     quantity : Nat;
+    colorCode : Text;
   };
 
   module SemenStraw {
@@ -46,11 +49,17 @@ actor {
     salePrice : Float;
   };
 
+  type SaleBill = {
+    sale : Sale;
+    straw : SemenStraw;
+    totalAmount : Float;
+  };
+
   let storage = Map.empty<Text, SemenStraw>();
   let sales = Map.empty<Text, Sale>();
   var nextSaleId = 0;
 
-  public shared ({ caller }) func addOrUpdateStraw(strawId : Text, bullId : Text, collectionDate : Text, quality : QualityGrade, storageLocation : Text, quantity : Nat) : async () {
+  public shared ({ caller }) func addOrUpdateStraw(strawId : Text, bullId : Text, collectionDate : Text, quality : QualityGrade, storageLocation : Text, quantity : Nat, colorCode : Text) : async () {
     if (strawId.isEmpty()) {
       Runtime.trap("Straw ID cannot be empty");
     };
@@ -63,6 +72,7 @@ actor {
       storageLocation;
       status = #Available;
       quantity;
+      colorCode;
     };
 
     storage.add(strawId, straw);
@@ -76,6 +86,30 @@ actor {
       case (?straw) {
         let updatedStraw = {
           straw with
+          status = newStatus;
+        };
+        storage.add(strawId, updatedStraw);
+      };
+    };
+  };
+
+  public shared ({ caller }) func transformStrawQuantity(strawId : Text, quantity : Nat) : async () {
+    switch (storage.get(strawId)) {
+      case (null) {
+        Runtime.trap("Straw not found");
+      };
+      case (?straw) {
+        let randomValue = 0;
+        let newStatus = switch (randomValue % 3) {
+          case (0) { #Available };
+          case (1) { #Sold };
+          case (2) { #Used };
+          case (_) { #Available };
+        };
+
+        let updatedStraw = {
+          straw with
+          quantity;
           status = newStatus;
         };
         storage.add(strawId, updatedStraw);
@@ -132,5 +166,23 @@ actor {
 
   public query ({ caller }) func getSaleById(saleId : Text) : async ?Sale {
     sales.get(saleId);
+  };
+
+  public query ({ caller }) func generateSaleBill(saleId : Text) : async ?SaleBill {
+    switch (sales.get(saleId)) {
+      case (null) { null };
+      case (?sale) {
+        switch (storage.get(sale.strawId)) {
+          case (null) { null };
+          case (?straw) {
+            ?{
+              sale;
+              straw;
+              totalAmount = sale.quantitySold.toFloat() * sale.salePrice;
+            };
+          };
+        };
+      };
+    };
   };
 };

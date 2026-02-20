@@ -29,6 +29,7 @@ export const AvailabilityStatus = IDL.Variant({
 });
 export const SemenStraw = IDL.Record({
   'status' : AvailabilityStatus,
+  'colorCode' : IDL.Text,
   'quality' : QualityGrade,
   'quantity' : IDL.Nat,
   'storageLocation' : IDL.Text,
@@ -36,10 +37,15 @@ export const SemenStraw = IDL.Record({
   'collectionDate' : IDL.Text,
   'strawId' : IDL.Text,
 });
+export const SaleBill = IDL.Record({
+  'sale' : Sale,
+  'straw' : SemenStraw,
+  'totalAmount' : IDL.Float64,
+});
 
 export const idlService = IDL.Service({
   'addOrUpdateStraw' : IDL.Func(
-      [IDL.Text, IDL.Text, IDL.Text, QualityGrade, IDL.Text, IDL.Nat],
+      [IDL.Text, IDL.Text, IDL.Text, QualityGrade, IDL.Text, IDL.Nat, IDL.Text],
       [],
       [],
     ),
@@ -48,10 +54,12 @@ export const idlService = IDL.Service({
       [],
       [],
     ),
+  'generateSaleBill' : IDL.Func([IDL.Text], [IDL.Opt(SaleBill)], ['query']),
   'getAllSales' : IDL.Func([], [IDL.Vec(Sale)], ['query']),
   'getAllStraws' : IDL.Func([], [IDL.Vec(SemenStraw)], ['query']),
   'getSaleById' : IDL.Func([IDL.Text], [IDL.Opt(Sale)], ['query']),
   'getStrawById' : IDL.Func([IDL.Text], [IDL.Opt(SemenStraw)], ['query']),
+  'transformStrawQuantity' : IDL.Func([IDL.Text, IDL.Nat], [], []),
   'updateStrawStatus' : IDL.Func([IDL.Text, AvailabilityStatus], [], []),
 });
 
@@ -79,6 +87,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const SemenStraw = IDL.Record({
     'status' : AvailabilityStatus,
+    'colorCode' : IDL.Text,
     'quality' : QualityGrade,
     'quantity' : IDL.Nat,
     'storageLocation' : IDL.Text,
@@ -86,10 +95,23 @@ export const idlFactory = ({ IDL }) => {
     'collectionDate' : IDL.Text,
     'strawId' : IDL.Text,
   });
+  const SaleBill = IDL.Record({
+    'sale' : Sale,
+    'straw' : SemenStraw,
+    'totalAmount' : IDL.Float64,
+  });
   
   return IDL.Service({
     'addOrUpdateStraw' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Text, QualityGrade, IDL.Text, IDL.Nat],
+        [
+          IDL.Text,
+          IDL.Text,
+          IDL.Text,
+          QualityGrade,
+          IDL.Text,
+          IDL.Nat,
+          IDL.Text,
+        ],
         [],
         [],
       ),
@@ -98,10 +120,12 @@ export const idlFactory = ({ IDL }) => {
         [],
         [],
       ),
+    'generateSaleBill' : IDL.Func([IDL.Text], [IDL.Opt(SaleBill)], ['query']),
     'getAllSales' : IDL.Func([], [IDL.Vec(Sale)], ['query']),
     'getAllStraws' : IDL.Func([], [IDL.Vec(SemenStraw)], ['query']),
     'getSaleById' : IDL.Func([IDL.Text], [IDL.Opt(Sale)], ['query']),
     'getStrawById' : IDL.Func([IDL.Text], [IDL.Opt(SemenStraw)], ['query']),
+    'transformStrawQuantity' : IDL.Func([IDL.Text, IDL.Nat], [], []),
     'updateStrawStatus' : IDL.Func([IDL.Text, AvailabilityStatus], [], []),
   });
 };

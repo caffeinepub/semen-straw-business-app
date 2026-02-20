@@ -9,12 +9,18 @@ export interface None {
 export type Option<T> = Some<T> | None;
 export interface SemenStraw {
     status: AvailabilityStatus;
+    colorCode: string;
     quality: QualityGrade;
     quantity: bigint;
     storageLocation: string;
     bullId: string;
     collectionDate: string;
     strawId: string;
+}
+export interface SaleBill {
+    sale: Sale;
+    straw: SemenStraw;
+    totalAmount: number;
 }
 export interface Sale {
     saleId: string;
@@ -36,11 +42,13 @@ export enum QualityGrade {
     Superior = "Superior"
 }
 export interface backendInterface {
-    addOrUpdateStraw(strawId: string, bullId: string, collectionDate: string, quality: QualityGrade, storageLocation: string, quantity: bigint): Promise<void>;
+    addOrUpdateStraw(strawId: string, bullId: string, collectionDate: string, quality: QualityGrade, storageLocation: string, quantity: bigint, colorCode: string): Promise<void>;
     createSale(strawId: string, saleDate: string, buyerName: string, buyerContact: string, quantitySold: bigint, salePrice: number): Promise<void>;
+    generateSaleBill(saleId: string): Promise<SaleBill | null>;
     getAllSales(): Promise<Array<Sale>>;
     getAllStraws(): Promise<Array<SemenStraw>>;
     getSaleById(saleId: string): Promise<Sale | null>;
     getStrawById(strawId: string): Promise<SemenStraw | null>;
+    transformStrawQuantity(strawId: string, quantity: bigint): Promise<void>;
     updateStrawStatus(strawId: string, newStatus: AvailabilityStatus): Promise<void>;
 }

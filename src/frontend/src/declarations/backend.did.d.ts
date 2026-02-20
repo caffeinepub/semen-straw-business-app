@@ -25,8 +25,14 @@ export interface Sale {
   'strawId' : string,
   'saleDate' : string,
 }
+export interface SaleBill {
+  'sale' : Sale,
+  'straw' : SemenStraw,
+  'totalAmount' : number,
+}
 export interface SemenStraw {
   'status' : AvailabilityStatus,
+  'colorCode' : string,
   'quality' : QualityGrade,
   'quantity' : bigint,
   'storageLocation' : string,
@@ -36,17 +42,19 @@ export interface SemenStraw {
 }
 export interface _SERVICE {
   'addOrUpdateStraw' : ActorMethod<
-    [string, string, string, QualityGrade, string, bigint],
+    [string, string, string, QualityGrade, string, bigint, string],
     undefined
   >,
   'createSale' : ActorMethod<
     [string, string, string, string, bigint, number],
     undefined
   >,
+  'generateSaleBill' : ActorMethod<[string], [] | [SaleBill]>,
   'getAllSales' : ActorMethod<[], Array<Sale>>,
   'getAllStraws' : ActorMethod<[], Array<SemenStraw>>,
   'getSaleById' : ActorMethod<[string], [] | [Sale]>,
   'getStrawById' : ActorMethod<[string], [] | [SemenStraw]>,
+  'transformStrawQuantity' : ActorMethod<[string, bigint], undefined>,
   'updateStrawStatus' : ActorMethod<[string, AvailabilityStatus], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

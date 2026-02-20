@@ -1,130 +1,151 @@
 {
   "kind": "build_request",
-  "title": "Add sell functionality and quantity tracking to semen straw inventory",
-  "projectName": "Semen Straw Business",
+  "title": "Add sell bill/invoice generation and straw color code field",
+  "projectName": "Semen Straw Manager",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-7",
-      "text": "Add a quantity field to the SemenStraw type in the backend data model to track the number of straws available for each record",
+      "id": "REQ-13",
+      "text": "Add a colorCode field to the SemenStraw type in the backend data model to store the color code of each semen straw",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-6"
         ],
         "quotes": [
-          "quantity ka option nahi he"
+          "straw coler code add karo"
         ]
       },
       "acceptanceCriteria": [
-        "SemenStraw type includes a quantity field of type Nat",
-        "Quantity represents the number of straws in inventory for that record",
-        "All existing CRUD operations handle the quantity field appropriately"
+        "SemenStraw type includes a colorCode field of type Text",
+        "The colorCode field is optional or can be an empty string",
+        "Existing CRUD operations (addOrUpdateStraw, queries) handle the colorCode field"
       ]
     },
     {
-      "id": "REQ-8",
-      "text": "Update the add straw form in the frontend to include a quantity input field that accepts positive integers",
+      "id": "REQ-14",
+      "text": "Update the AddStrawForm component to include an input field for straw color code",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-6"
         ],
         "quotes": [
-          "quantity ka option nahi he"
+          "straw coler code add karo"
         ]
       },
       "acceptanceCriteria": [
-        "AddStrawForm component includes a quantity input field",
-        "Quantity field validates that the value is a positive integer",
-        "Form submission includes the quantity value when creating new straws"
+        "Add straw form displays a text input field labeled 'Color Code' or 'Straw Color Code'",
+        "The color code input is submitted along with other straw details when creating a new straw",
+        "Form validation allows the color code field to be optional"
       ]
     },
     {
-      "id": "REQ-9",
-      "text": "Display the quantity column in the inventory table showing the current quantity for each semen straw record",
+      "id": "REQ-15",
+      "text": "Update the EditStrawForm component to allow editing the straw color code",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-6"
         ],
         "quotes": [
-          "quantity ka option nahi he"
+          "straw coler code add karo"
         ]
       },
       "acceptanceCriteria": [
-        "InventoryTable component displays a quantity column",
-        "Quantity values are clearly visible for each straw record",
-        "Column is positioned logically within the existing table layout"
+        "Edit straw form displays the current color code value in an editable text input",
+        "Updated color code is saved when the form is submitted",
+        "Color code field remains optional during editing"
       ]
     },
     {
-      "id": "REQ-10",
-      "text": "Add the ability to edit quantity in the EditStrawForm component",
+      "id": "REQ-16",
+      "text": "Display the color code column in the inventory table showing the color code for each semen straw record",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-6"
         ],
         "quotes": [
-          "quantity ka option nahi he"
+          "straw coler code add karo"
         ]
       },
       "acceptanceCriteria": [
-        "EditStrawForm includes a quantity input field pre-filled with current value",
-        "Users can update the quantity when editing a straw record",
-        "Quantity field validates positive integers on edit"
+        "InventoryTable component displays a 'Color Code' column",
+        "Each row shows the corresponding straw's color code value",
+        "Empty color codes display appropriately (e.g., '-' or empty cell)"
       ]
     },
     {
-      "id": "REQ-11",
-      "text": "Add a sell/sale functionality to record semen straw sales with fields for sale date, buyer information, quantity sold, and sale price",
-      "target": "both",
+      "id": "REQ-17",
+      "text": "Add a backend function to generate a sale bill/invoice with sale details including sale ID, date, buyer information, straw details, quantity sold, and price",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-6"
         ],
         "quotes": [
-          "sell ka option nahi he"
+          "sell bill ka option"
         ]
       },
       "acceptanceCriteria": [
-        "Backend includes a Sale type with fields: saleId, strawId, saleDate, buyerName, quantitySold, and salePrice",
-        "Backend provides functions to record a sale and retrieve sale records",
-        "Frontend includes a form or dialog to record a sale for a specific straw",
-        "Recording a sale reduces the quantity of the associated straw record",
-        "Sales history is accessible from the frontend"
+        "Backend function accepts a sale ID and returns formatted bill/invoice data",
+        "Bill includes all sale details: sale ID, sale date, buyer name and contact, straw ID, bull ID, quantity, and total price",
+        "Function retrieves corresponding straw details for the sale record"
       ]
     },
     {
-      "id": "REQ-12",
-      "text": "Display a sell/sale action button or option in the inventory table for each straw record to initiate the sale recording process",
+      "id": "REQ-18",
+      "text": "Add a 'Generate Bill' or 'View Invoice' action button in the SalesHistory page for each sale record to display or download the sale bill",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-6"
         ],
         "quotes": [
-          "sell ka option nahi he"
+          "sell bill ka option",
+          "straw sell kaise karu"
         ]
       },
       "acceptanceCriteria": [
-        "Each row in the inventory table includes a sell button or action",
-        "Clicking the sell button opens a sale recording form/dialog",
-        "The sell option is clearly visible and accessible"
+        "Each sale row in the sales history table displays a 'Generate Bill' or 'View Invoice' button",
+        "Clicking the button displays a formatted bill/invoice with all sale details",
+        "Bill includes business header, sale information, buyer details, item details, and total price",
+        "User can print or download the bill as a PDF"
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "text": "Create a frontend invoice/bill component that displays a formatted sale bill with a professional layout suitable for printing",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "sell bill ka option"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Bill component displays business name/logo at the top",
+        "Shows invoice number (sale ID), date, and buyer information",
+        "Displays itemized details: straw ID, bull ID, color code, quantity, unit price, and total",
+        "Includes a print button and is print-optimized with proper CSS",
+        "Layout uses the agricultural theme with appropriate styling"
       ]
     }
   ],
   "constraints": [
-    "Maintain the existing agricultural-themed design when adding new UI elements",
-    "Ensure quantity updates are properly validated to prevent negative values",
-    "Sale transactions must maintain data integrity between straw quantity and sale records"
+    "Do not modify frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui files",
+    "Maintain single-actor architecture in the backend with all logic in backend/main.mo",
+    "Preserve existing SemenStraw and Sale data structures while adding the colorCode field"
   ],
   "nonGoals": [
-    "Advanced sales analytics or reporting",
-    "Multi-currency support for sale prices",
-    "Bulk sale operations",
-    "Automated inventory alerts or notifications"
+    "Integration with external invoicing or accounting software",
+    "Email delivery of bills to buyers",
+    "Multi-currency support for pricing",
+    "Batch bill generation for multiple sales",
+    "Payment tracking or payment status management"
   ],
   "imageRequirements": {
     "required": [],

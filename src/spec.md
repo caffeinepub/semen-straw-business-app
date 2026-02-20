@@ -1,16 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Add quantity tracking and sell functionality to the semen straw inventory management system.
+**Goal:** Add straw color code tracking and sale bill/invoice generation functionality to the Semen Straw Manager application.
 
 **Planned changes:**
-- Add quantity field to track the number of straws available for each record
-- Add quantity input to the add straw form with validation for positive integers
-- Display quantity column in the inventory table
-- Enable quantity editing in the edit straw form
-- Add sale functionality to record sales with sale date, buyer name, quantity sold, and sale price
-- Add sell button/action in the inventory table for each straw record
-- Automatically reduce straw quantity when sales are recorded
-- Provide access to sales history
+- Add a colorCode field to the SemenStraw data model in the backend
+- Update AddStrawForm and EditStrawForm components to include a color code input field
+- Display the color code in a new column in the inventory table
+- Add a backend function to generate sale bills/invoices with complete sale details
+- Add a "Generate Bill" button to each sale record in the SalesHistory page
+- Create a printable invoice/bill component with professional layout showing sale details, buyer information, straw details including color code, quantity, and pricing
 
-**User-visible outcome:** Users can track the quantity of each semen straw in inventory, record sales with buyer information and pricing, and see the quantity automatically decrease when straws are sold. A sell button is available for each straw in the inventory table.
+**User-visible outcome:** Users can now track the color code for each semen straw in their inventory. They can also generate and print professional sale bills/invoices for any sale transaction directly from the sales history page.

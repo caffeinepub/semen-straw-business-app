@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
+  "projectStateVersion": 7,
   "summary": "App for semen straw business",
   "architectural_notes": [],
   "known_issues": [],
@@ -77,6 +77,46 @@
         "REQ-12"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-addstrawform-component-to-include-an-input-field-for-straw-color-code",
+      "title": "Update the AddStrawForm component to include an input field for straw color code",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-editstrawform-component-to-allow-editing-the-straw-color-code",
+      "title": "Update the EditStrawForm component to allow editing the straw color code",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-color-code-column-in-the-inventory-table-showing-the-color-code-for-each-semen-straw-record",
+      "title": "Display the color code column in the inventory table showing the color code for each semen straw record",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-generate-bill-or-view-invoice-action-button-in-the-saleshistory-page-for-each-sale-record-to-display-or-download-the-sale-bill",
+      "title": "Add a 'Generate Bill' or 'View Invoice' action button in the SalesHistory page for each sale record to display or download the sale bill",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-frontend-invoice-bill-component-that-displays-a-formatted-sale-bill-with-a-professional-layout-suitable-for-printing",
+      "title": "Create a frontend invoice/bill component that displays a formatted sale bill with a professional layout suitable for printing",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -113,6 +153,34 @@
       "summary": "Add a quantity field to the SemenStraw type in the backend data model to track the number of straws available for each record",
       "reqIds": [
         "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add a sell bill/invoice generation feature for semen straw sales",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Add straw color code field to semen straw inventory records",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add a colorCode field to the SemenStraw type in the backend data model to store the color code of each semen straw",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add a backend function to generate a sale bill/invoice with sale details including sale ID, date, buyer information, straw details, quantity sold, and price",
+      "reqIds": [
+        "REQ-17"
       ],
       "status": "pending"
     }
